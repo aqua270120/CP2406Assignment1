@@ -2,9 +2,8 @@ public class Bus extends Car {
     //Attributes
     //Get set methods
     //Constructors
-
-    public Bus(String id) {
-        super(id);
+    public Bus(String id, Road currentRoad) {
+        super(id, currentRoad);
         length = super.getLength() * 3;
     }
 
@@ -15,7 +14,8 @@ public class Bus extends Car {
     //Input output methods
     @Override
     public void showOutPut() {
-        System.out.println("This is bus with length is " + length);
+        System.out.println("Bus " + this.id + " going: " + this.speed + "dm/s on "
+                +this.currentRoad.getId() + " at position "+ this.position);
     }
     //Business methods
 }
