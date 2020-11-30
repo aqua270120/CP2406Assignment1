@@ -107,7 +107,5 @@ public class Road {
         showEndLocation();
     }
     //Business methods
-    public void move(){
-        System.out.println("Hello world");
-    }
+
 }
