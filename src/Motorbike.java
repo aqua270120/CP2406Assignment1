@@ -3,8 +3,8 @@ public class Motorbike extends Car {
     //Get set methods
     //Constructors
 
-    public Motorbike(String id) {
-        super(id);
+    public Motorbike(String id, Road currentRoad) {
+        super(id, currentRoad);
         length = super.getLength() * 0.5f;
     }
 
@@ -15,7 +15,8 @@ public class Motorbike extends Car {
 
     @Override
     public void showOutPut() {
-        System.out.println("This is motorbike, length is " + length);
+        System.out.println("Car " + this.id + " going: " + this.speed + "dm/s on "
+                +this.currentRoad.getId() + " at position "+ this.position);
     }
     //Business methods
 }
