@@ -1,34 +1,34 @@
 public class Car {
+    //Attributes
     protected  float breadth;
     private final int NEXT_ROAD_INDEX = 0;
     private final int START_POSITION = 0;
-    //Attributes
     protected float length;
     protected String id;
     protected int speed;
     protected int position;
     protected Road currentRoad = new Road();
-    //Get set methods
 
     //Constructors
     public Car(String id, Road currentRoad) {
         this.id = id;
         this.currentRoad = currentRoad;
-        length = 1f;
-        breadth = length * 0.5f;
-        speed = 1;
-        position = 0;
+        this.length = 1f;
+        this.breadth = length * 0.5f;
+        this.speed = 1;
+        this.position = 0;
 
     }
 
     public Car() {
-        id = "0";
-        length = 1f;
-        breadth = length * 0.5f;
-        speed = 1;
-        position = 1;
+        this.id = "0";
+        this.length = 1f;
+        this.breadth = length * 0.5f;
+        this.speed = 1;
+        this.position = 1;
     }
 
+    //Get set methods
     public float getLength() {
         return length;
     }
@@ -79,7 +79,6 @@ public class Car {
 
 
     //Input output methods
-
     public void showOutPut() {
         System.out.println("Car " + this.id + " going: " + this.speed + "dm/s on road "
                 + this.currentRoad.getId() + " at position " + this.position);
@@ -108,8 +107,6 @@ public class Car {
                 this.speed = 0;
             }
         }
-
-
     }
 }
 
