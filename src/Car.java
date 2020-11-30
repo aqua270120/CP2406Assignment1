@@ -87,25 +87,26 @@ public class Car {
     //Business methods
     public void move() {
         this.speed = this.currentRoad.getSpeedLimit();
-        if (!this.currentRoad.getLigthsOnRoad().isEmpty() && this.position == this.currentRoad.getLigthsOnRoad().get(0).getPosition()[0]) {
-            if (this.currentRoad.getLigthsOnRoad().get(0).getState().equals("RED")) {
-                this.speed = 0;
-            } else {
-                if (!this.currentRoad.getConnectedRoads().isEmpty()) {
-                    this.currentRoad.getCarsOnRoad().remove(this);
-                    this.currentRoad = this.currentRoad.getConnectedRoads().get(NEXT_ROAD_INDEX);
-                    this.currentRoad.getCarsOnRoad().add(this);
-                    this.position = START_POSITION;
+        if (!this.currentRoad.getLigthsOnRoad().isEmpty()) {
+            if(this.position == this.currentRoad.getLigthsOnRoad().get(0).getPosition()[0]) {
+                if (this.currentRoad.getLigthsOnRoad().get(0).getState().equals("RED")) {
+                    this.speed = 0;
+                } else {
+                    if (!this.currentRoad.getConnectedRoads().isEmpty()) {
+                        this.currentRoad.getCarsOnRoad().remove(this);
+                        this.currentRoad = this.currentRoad.getConnectedRoads().get(NEXT_ROAD_INDEX);
+                        this.currentRoad.getCarsOnRoad().add(this);
+                        this.position = START_POSITION;
+                    }
                 }
             }
+        }
+        if (this.currentRoad.getLength() > this.getPosition()) {
+            this.position += this.speed;
+        } else if (this.currentRoad.getLength() < this.getPosition()) {
+            this.speed = 0;
         } else {
-            if (this.currentRoad.getLength() > this.getPosition()) {
-                this.position += this.speed;
-            } else if (this.currentRoad.getLength() < this.getPosition()) {
-                this.speed = 0;
-            } else {
-                this.speed = 0;
-            }
+            this.speed = 0;
         }
     }
 }
