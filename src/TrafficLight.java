@@ -1,26 +1,16 @@
+import java.util.Random;
+
 public class TrafficLight {
-    private static final String GREEN = "green";
-    private static final String RED = "red";
-    private final double CHANGE_COLOR_RATE = 0.5;
     //Attributes
+    private static final String GREEN = "GREEN";
+    private static final String RED = "RED";
+    private final double CHANGE_GREEN_RATE = 50;
     private String id;
     private String state;
     private int[] position;
     private Road roadBelongTo;
+
     //Get set methods
-
-    public TrafficLight(String id, Road roadBelongTo) {
-        this.id = id;
-        this.roadBelongTo = roadBelongTo;
-        state = RED;
-        this.roadBelongTo.getLigthsOnRoad().add(this);
-        position = new int[]{this.roadBelongTo.getLength(),0};
-    }
-
-    public TrafficLight() {
-
-    }
-
     public String getId() {
         return id;
     }
@@ -46,6 +36,17 @@ public class TrafficLight {
     }
 
     //Constructors
+    public TrafficLight(String id, Road roadBelongTo) {
+        this.id = id;
+        this.roadBelongTo = roadBelongTo;
+        state = RED;
+        this.roadBelongTo.getLigthsOnRoad().add(this);
+        position = new int[]{this.roadBelongTo.getLength(), 0};
+    }
+
+    public TrafficLight() {
+
+    }
 
     public Road getRoadBelongTo() {
         return roadBelongTo;
@@ -63,6 +64,13 @@ public class TrafficLight {
 
     //Business methods
     public void operate() {
+        Random rd = new Random();
+        int possibility = rd.nextInt(100);
 
+        if (possibility > CHANGE_GREEN_RATE) {
+            this.state = "GREEN";
+        } else {
+            this.state = "RED";
+        }
     }
 }
