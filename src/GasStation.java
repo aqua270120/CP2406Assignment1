@@ -1,16 +1,25 @@
-
 import java.util.Random;
 
 public class GasStation {
+    private final double OPEN_RATE = 50;
     //Attributes
-     Random rd = new Random();
+    Random rd = new Random();
     private String id;
-    private String status;
     private int[] position;
     private Road roadLocatedOn;
-    private final double OPEN_RATE = 50;
-    private final String OPEN = "OPEN";
-    private final String CLOSE = "CLOSE";
+
+    //Constructors
+    public GasStation(String id, Road roadBelongTo) {
+        this.roadLocatedOn = roadBelongTo;
+        position = new int[]{this.roadLocatedOn.getLength(), 0}; //place gas station at the end of the road
+        this.id = id;
+        this.roadLocatedOn.getGasStationList().add(this);
+    }
+
+    public GasStation() {
+
+
+    }
 
     //Get set methods
     public String getId() {
@@ -19,14 +28,6 @@ public class GasStation {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public int[] getPosition() {
@@ -45,35 +46,17 @@ public class GasStation {
         this.roadLocatedOn = roadLocatedOn;
     }
 
-    //Constructors
-    public GasStation(String id, Road roadBelongTo) {
-//        position = new int[]{rd.nextInt(this.roadLocatedOn.getLength()) ,0};
-        this.roadLocatedOn = roadBelongTo;
-        position = new int[]{rd.nextInt(this.roadLocatedOn.getLength()),0};
-        this.id = id;
-        this.roadLocatedOn.getGasStationList().add(this);
-    }
-
-    public GasStation() {
-
-
-    }
-
     //Input output methods
-    public void showInfo(){
-        System.out.println("Gas_" +this.id + " locate at position " + this.position[0] + " on road " + this.roadLocatedOn.getId());
+    public void showInfo() {
+        System.out.printf("Gas station %s on road  %s at position %s%n",
+                this.id, this.roadLocatedOn.getId(), (this.position[0] + "," + this.position[1]));
     }
 
-    //Business methods
-    public void operate(){
-        Random rd = new Random();
-        int possibility = rd.nextInt(100);
-
-        if (possibility > OPEN_RATE) {
-            this.status = OPEN;
-        } else {
-            this.status = CLOSE;
-        }
+    //Business method
+    public int reFillGas(int gasLevel, Road nextRoad) {
+        System.out.println("---CAR IS REFILLING...---");
+        return gasLevel = nextRoad.getLength();
     }
+
 
 }

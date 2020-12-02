@@ -14,15 +14,17 @@ public class Main {
         int roadSpawns = 2;
         int carSpawns = 1;
         int lightSpawns = 1;
+        int gasStationSpawns = 1;
         ArrayList<Road> roads = new ArrayList<>();
         ArrayList<Car> cars = new ArrayList<>();
         ArrayList<TrafficLight> lights = new ArrayList<>();
-
-        showUI(sc, roads, cars, lights, roadSpawns, carSpawns, lightSpawns);
-        showGamePlay(sc, cars, lights);
+        ArrayList<GasStation> gasStations = new ArrayList<>();
+        Road roadTest = new Road("1", 1, 10, new int[]{0, 0});
+        showUI(sc, roads, cars, lights, gasStations, roadSpawns, carSpawns, lightSpawns, gasStationSpawns);
+        showGamePlay(sc, cars, lights, gasStations);
     }
 
-    public static void showUI(Scanner sc, ArrayList<Road> roads, ArrayList<Car> cars, ArrayList<TrafficLight> lights, int roadSpawns,int carSpawns,int lightSpawns  ){
+    public static void showUI(Scanner sc, ArrayList<Road> roads, ArrayList<Car> cars, ArrayList<TrafficLight> lights, ArrayList<GasStation> gasStations, int roadSpawns, int carSpawns, int lightSpawns, int gasStationSpawns) {
         System.out.println("Object Creation:\n---------------------");
         System.out.println("Roads:");
         for (int i = 0; i < roadSpawns; i++) {
@@ -51,16 +53,26 @@ public class Main {
             lights.add(new TrafficLight(Integer.toString(i), roads.get(0))); // all created lights will begin on road_0.
             lights.get(i).showLightInfo();
         }
+
+
+        System.out.println("\nGas Stations;");
+
+        for (int i = 0; i < gasStationSpawns; i++) {
+            gasStations.add(new GasStation(Integer.toString(i), roads.get(0)));
+            gasStations.get(i).showInfo();
+        }
+
         System.out.println();
 
         System.out.println("Settings:");
         roads.get(1).setStartLocation(new int[]{roads.get(0).getLength() + 1, 0}); // place road_1 to a position at the end of road_0.
-        roads.get(1).setEndLocation(new int[]{roads.get(0).getLength() + 1 + roads.get(1).getLength(),0});
+        roads.get(1).setEndLocation(new int[]{roads.get(0).getLength() + 1 + roads.get(1).getLength(), 0});
         roads.get(1).showRoadInfo();
         roads.get(0).getConnectedRoads().add(roads.get(1)); // connect road_0 to road_1
         System.out.println();
     }
-    public static void showGamePlay(Scanner sc, ArrayList<Car> cars, ArrayList<TrafficLight> lights){
+
+    public static void showGamePlay(Scanner sc, ArrayList<Car> cars, ArrayList<TrafficLight> lights, ArrayList<GasStation> gasStations) {
         System.out.println("Simulation:");
         int time = 0;
         System.out.print("Set time scale in milliseconds:");
@@ -71,6 +83,12 @@ public class Main {
                 light.operate();
                 light.showLightInfo();
             }
+
+            for (GasStation station : gasStations) {
+                station.showInfo();
+            }
+
+
             for (Car car : cars) {
                 car.move();
                 car.showOutPut();

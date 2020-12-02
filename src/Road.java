@@ -10,8 +10,16 @@ public class Road {
     private ArrayList<Road> connectedRoads = new ArrayList<>();
     private ArrayList<Car> carsOnRoad = new ArrayList<>();
     private ArrayList<TrafficLight> ligthsOnRoad = new ArrayList<>();
-
+    private ArrayList <GasStation> gasStationList = new ArrayList<>();
     //Get set methods
+
+    public ArrayList<GasStation> getGasStationList() {
+        return gasStationList;
+    }
+
+    public void setGasStationList(ArrayList<GasStation> gasStationList) {
+        this.gasStationList = gasStationList;
+    }
 
     public String getId() {
         return id;

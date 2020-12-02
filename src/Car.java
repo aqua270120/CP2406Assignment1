@@ -1,12 +1,13 @@
 public class Car {
-    //Attributes
-    protected  float breadth;
     private final int NEXT_ROAD_INDEX = 0;
     private final int START_POSITION = 0;
+    //Attributes
+    protected float breadth;
     protected float length;
     protected String id;
     protected int speed;
     protected int position;
+    protected int gasLevel;
     protected Road currentRoad = new Road();
 
     //Constructors
@@ -17,7 +18,7 @@ public class Car {
         this.breadth = length * 0.5f;
         this.speed = 1;
         this.position = 0;
-
+        this.gasLevel = this.currentRoad.getLength(); // set gas Level equals to road length
     }
 
     public Car() {
@@ -26,9 +27,20 @@ public class Car {
         this.breadth = length * 0.5f;
         this.speed = 1;
         this.position = 1;
+        this.gasLevel = this.currentRoad.getLength();
     }
 
     //Get set methods
+
+
+    public int getGasLevel() {
+        return gasLevel;
+    }
+
+    public void setGasLevel(int gasLevel) {
+        this.gasLevel = gasLevel;
+    }
+
     public float getLength() {
         return length;
     }
@@ -80,7 +92,7 @@ public class Car {
 
     //Input output methods
     public void showOutPut() {
-        System.out.println("Car " + this.id + " going: " + this.speed + "dm/s on road "
+        System.out.println("Car " + this.id + " Gas Level: " + this.gasLevel + " going: " + this.speed + "dm/s on road "
                 + this.currentRoad.getId() + " at position " + this.position);
     }
 
@@ -88,13 +100,15 @@ public class Car {
     public void move() {
         this.speed = this.currentRoad.getSpeedLimit();
         if (!this.currentRoad.getLigthsOnRoad().isEmpty()) {
-            if(this.position == this.currentRoad.getLigthsOnRoad().get(0).getPosition()[0]) {
+            if (this.position == this.currentRoad.getLigthsOnRoad().get(0).getPosition()[0]) {
                 if (this.currentRoad.getLigthsOnRoad().get(0).getState().equals("RED")) {
                     this.speed = 0;
                 } else {
                     if (!this.currentRoad.getConnectedRoads().isEmpty()) {
                         this.currentRoad.getCarsOnRoad().remove(this);
-                        this.currentRoad = this.currentRoad.getConnectedRoads().get(NEXT_ROAD_INDEX);
+                        Road nextRoad = this.currentRoad.getConnectedRoads().get(NEXT_ROAD_INDEX);
+                        this.gasLevel = this.currentRoad.getGasStationList().get(0).reFillGas(this.gasLevel, nextRoad);
+                        this.currentRoad = nextRoad;
                         this.currentRoad.getCarsOnRoad().add(this);
                         this.position = START_POSITION;
                     }
@@ -103,6 +117,7 @@ public class Car {
         }
         if (this.currentRoad.getLength() > this.getPosition()) {
             this.position += this.speed;
+            this.gasLevel -= this.speed;
         } else if (this.currentRoad.getLength() < this.getPosition()) {
             this.speed = 0;
         } else {
