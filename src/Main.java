@@ -19,7 +19,6 @@ public class Main {
         ArrayList<Car> cars = new ArrayList<>();
         ArrayList<TrafficLight> lights = new ArrayList<>();
         ArrayList<GasStation> gasStations = new ArrayList<>();
-        Road roadTest = new Road("1", 1, 10, new int[]{0, 0});
         showUI(sc, roads, cars, lights, gasStations, roadSpawns, carSpawns, lightSpawns, gasStationSpawns);
         showGamePlay(sc, cars, lights, gasStations);
     }
