@@ -9,7 +9,7 @@ public class Car {
     protected int position;
     protected int gasLevel;
     protected Road currentRoad = new Road();
-
+    public final int MIN_GAS_LEVEL = 0;
     //Constructors
     public Car(String id, Road currentRoad) {
         this.id = id;
@@ -99,26 +99,24 @@ public class Car {
     //Business methods
     public void move() {
         this.speed = this.currentRoad.getSpeedLimit();
-        if (!this.currentRoad.getLigthsOnRoad().isEmpty()) {
-            if (this.position == this.currentRoad.getLigthsOnRoad().get(0).getPosition()[0]) {
+        if (!this.currentRoad.getLigthsOnRoad().isEmpty() && !this.currentRoad.getGasStationList().isEmpty()) {
+            if (this.position == this.currentRoad.getLigthsOnRoad().get(0).getPosition()[0] && this.position == this.currentRoad.getGasStationList().get(0).getPosition()[0]) {
                 if (this.currentRoad.getLigthsOnRoad().get(0).getState().equals("RED")) {
                     this.speed = 0;
                 } else {
-                    if (!this.currentRoad.getConnectedRoads().isEmpty()) {
                         this.currentRoad.getCarsOnRoad().remove(this);
                         Road nextRoad = this.currentRoad.getConnectedRoads().get(NEXT_ROAD_INDEX);
                         this.gasLevel = this.currentRoad.getGasStationList().get(0).reFillGas(this.gasLevel, nextRoad);
                         this.currentRoad = nextRoad;
                         this.currentRoad.getCarsOnRoad().add(this);
                         this.position = START_POSITION;
-                    }
                 }
             }
         }
-        if (this.currentRoad.getLength() > this.getPosition()) {
+        if (this.currentRoad.getLength() > this.getPosition() && this.gasLevel >= MIN_GAS_LEVEL) {
             this.position += this.speed;
             this.gasLevel -= this.speed;
-        } else if (this.currentRoad.getLength() < this.getPosition()) {
+        } else if (this.currentRoad.getLength() < this.getPosition() || this.gasLevel <= MIN_GAS_LEVEL ) {
             this.speed = 0;
         } else {
             this.speed = 0;
