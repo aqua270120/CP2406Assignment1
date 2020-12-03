@@ -87,15 +87,14 @@ public class Main {
                 station.showInfo();
             }
 
-
             for (Car car : cars) {
                 car.move();
                 car.showOutPut();
                 if (car.getCurrentRoad().getConnectedRoads().isEmpty() && (car.getSpeed() == 0)) {
-                    carsFinished = carsFinished + 1;
+                    carsFinished += 1;
                 }
             }
-            time = time + 1;
+            time += 1;
             System.out.println(time + " Seconds have passed.\n");
             try {
                 Thread.sleep(speedOfSim); // set speed of simulation.

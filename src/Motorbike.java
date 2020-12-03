@@ -2,7 +2,6 @@ public class Motorbike extends Car {
     //Attributes
     //Get set methods
     //Constructors
-
     public Motorbike(String id, Road currentRoad) {
         super(id, currentRoad);
         length = super.getLength() * 0.5f;

@@ -35,6 +35,14 @@ public class TrafficLight {
         this.position = position;
     }
 
+    public Road getRoadBelongTo() {
+        return roadBelongTo;
+    }
+
+    public void setRoadBelongTo(Road roadBelongTo) {
+        this.roadBelongTo = roadBelongTo;
+    }
+
     //Constructors
     public TrafficLight(String id, Road roadBelongTo) {
         this.id = id;
@@ -48,14 +56,6 @@ public class TrafficLight {
 
     }
 
-    public Road getRoadBelongTo() {
-        return roadBelongTo;
-    }
-
-    public void setRoadBelongTo(Road roadBelongTo) {
-        this.roadBelongTo = roadBelongTo;
-    }
-
     //Input output methods
     public void showLightInfo() {
         System.out.printf("Light %s on road %s is : %s at position %s%n",
@@ -66,7 +66,6 @@ public class TrafficLight {
     public void operate() {
         Random rd = new Random();
         int possibility = rd.nextInt(100);
-
         if (possibility > CHANGE_GREEN_RATE) {
             this.state = "GREEN";
         } else {

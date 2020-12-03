@@ -10,24 +10,25 @@ public class Car {
     protected int gasLevel;
     protected Road currentRoad = new Road();
     public final int MIN_GAS_LEVEL = 0;
+    public final int MIN_SPEED_LEVEL = 0;
     //Constructors
     public Car(String id, Road currentRoad) {
         this.id = id;
         this.currentRoad = currentRoad;
-        this.length = 1f;
-        this.breadth = length * 0.5f;
-        this.speed = 1;
-        this.position = 0;
-        this.gasLevel = this.currentRoad.getLength(); // set gas Level equals to road length
+        length = 1f;
+        breadth = length * 0.5f;
+        speed = 1;
+        position = 0;
+        gasLevel = this.currentRoad.getLength(); // set gas Level equals to road length
     }
 
     public Car() {
-        this.id = "0";
-        this.length = 1f;
-        this.breadth = length * 0.5f;
-        this.speed = 1;
-        this.position = 1;
-        this.gasLevel = this.currentRoad.getLength();
+        id = "0";
+        length = 1f;
+        breadth = length * 0.5f;
+        speed = 1;
+        position = 1;
+        gasLevel = this.currentRoad.getLength();
     }
 
     //Get set methods
@@ -102,25 +103,28 @@ public class Car {
         if (!this.currentRoad.getLigthsOnRoad().isEmpty() && !this.currentRoad.getGasStationList().isEmpty()) {
             if (this.position == this.currentRoad.getLigthsOnRoad().get(0).getPosition()[0] && this.position == this.currentRoad.getGasStationList().get(0).getPosition()[0]) {
                 if (this.currentRoad.getLigthsOnRoad().get(0).getState().equals("RED")) {
-                    this.speed = 0;
+                    this.speed = MIN_SPEED_LEVEL;
                 } else {
+                    Road nextRoad = this.currentRoad.getConnectedRoads().get(NEXT_ROAD_INDEX);
+                    this.gasLevel = this.currentRoad.getGasStationList().get(0).reFillGas(this.gasLevel, nextRoad); // only move to next road when gas is refilled
+                    if(this.gasLevel > MIN_GAS_LEVEL){
                         this.currentRoad.getCarsOnRoad().remove(this);
-                        Road nextRoad = this.currentRoad.getConnectedRoads().get(NEXT_ROAD_INDEX);
-                        this.gasLevel = this.currentRoad.getGasStationList().get(0).reFillGas(this.gasLevel, nextRoad);
                         this.currentRoad = nextRoad;
                         this.currentRoad.getCarsOnRoad().add(this);
                         this.position = START_POSITION;
+                    }
                 }
             }
         }
-        if (this.currentRoad.getLength() > this.getPosition() && this.gasLevel >= MIN_GAS_LEVEL) {
+        if (this.currentRoad.getLength() > this.getPosition() && this.gasLevel > MIN_GAS_LEVEL) {
             this.position += this.speed;
             this.gasLevel -= this.speed;
         } else if (this.currentRoad.getLength() < this.getPosition() || this.gasLevel <= MIN_GAS_LEVEL ) {
-            this.speed = 0;
+            this.speed = MIN_SPEED_LEVEL;
         } else {
-            this.speed = 0;
+            this.speed = MIN_SPEED_LEVEL;
         }
+
     }
 }
 

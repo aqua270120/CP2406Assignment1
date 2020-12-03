@@ -1,9 +1,7 @@
 import java.util.Random;
 
 public class GasStation {
-    private final double OPEN_RATE = 50;
     //Attributes
-    Random rd = new Random();
     private String id;
     private int[] position;
     private Road roadLocatedOn;
@@ -17,7 +15,6 @@ public class GasStation {
     }
 
     public GasStation() {
-
 
     }
 

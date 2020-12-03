@@ -10,7 +10,21 @@ public class Road {
     private ArrayList<Road> connectedRoads = new ArrayList<>();
     private ArrayList<Car> carsOnRoad = new ArrayList<>();
     private ArrayList<TrafficLight> ligthsOnRoad = new ArrayList<>();
-    private ArrayList <GasStation> gasStationList = new ArrayList<>();
+    private ArrayList<GasStation> gasStationList = new ArrayList<>();
+
+    //Constructors
+    public Road(String id, int speedLimit, int length, int[] startLocation) {
+        this.id = id;
+        this.speedLimit = speedLimit;
+        this.length = length;
+        this.startLocation = startLocation;
+        this.endLocation = new int[]{this.startLocation[0] + this.length, 0};
+    }
+
+    public Road() {
+
+    }
+
     //Get set methods
 
     public ArrayList<GasStation> getGasStationList() {
@@ -85,30 +99,16 @@ public class Road {
         this.ligthsOnRoad = ligthsOnRoad;
     }
 
-    //Constructors
-
-    public Road(String id, int speedLimit, int length, int[] startLocation) {
-        this.id = id;
-        this.speedLimit = speedLimit;
-        this.length = length;
-        this.startLocation = startLocation;
-        this.endLocation = new int[]{this.startLocation[0] + this.length,0};
-    }
-
-    public Road(){
-
-    }
-
     //Input output methods
-    public void showStartLocation(){
+    public void showStartLocation() {
         System.out.println("Start Location is: " + startLocation[0] + "," + startLocation[1]);
     }
 
-    public void showEndLocation(){
+    public void showEndLocation() {
         System.out.println("End Location is: " + endLocation[0] + "," + endLocation[1]);
     }
 
-    public void showRoadInfo(){
+    public void showRoadInfo() {
         System.out.printf("Road ID: %s - Speed limit: %dm/s - Length: %d%n"
                 , this.id, this.speedLimit, this.length);
         showStartLocation();
