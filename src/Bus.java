@@ -15,7 +15,7 @@ public class Bus extends Car {
     @Override
     public void showOutPut() {
         System.out.println("Bus " + this.id + " going: " + this.speed + "dm/s on "
-                +this.currentRoad.getId() + " at position "+ this.position);
+                + this.currentRoad.getId() + " at position " + this.position);
     }
     //Business methods
 }

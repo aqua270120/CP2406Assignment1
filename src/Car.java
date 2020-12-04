@@ -1,4 +1,6 @@
 public class Car {
+    public final int MIN_GAS_LEVEL = 0;
+    public final int MIN_SPEED_LEVEL = 0;
     private final int NEXT_ROAD_INDEX = 0;
     private final int START_POSITION = 0;
     //Attributes
@@ -9,15 +11,14 @@ public class Car {
     protected int position;
     protected int gasLevel;
     protected Road currentRoad = new Road();
-    public final int MIN_GAS_LEVEL = 0;
-    public final int MIN_SPEED_LEVEL = 0;
+
     //Constructors
     public Car(String id, Road currentRoad) {
         this.id = id;
         this.currentRoad = currentRoad;
         length = 1f;
         breadth = length * 0.5f;
-        speed = 1;
+        speed = 0;
         position = 0;
         gasLevel = this.currentRoad.getLength(); // set gas Level equals to road length
     }
@@ -26,14 +27,12 @@ public class Car {
         id = "0";
         length = 1f;
         breadth = length * 0.5f;
-        speed = 1;
+        speed = 0;
         position = 1;
         gasLevel = this.currentRoad.getLength();
     }
 
     //Get set methods
-
-
     public int getGasLevel() {
         return gasLevel;
     }
@@ -107,11 +106,13 @@ public class Car {
                 } else {
                     Road nextRoad = this.currentRoad.getConnectedRoads().get(NEXT_ROAD_INDEX);
                     this.gasLevel = this.currentRoad.getGasStationList().get(0).reFillGas(this.gasLevel, nextRoad); // only move to next road when gas is refilled
-                    if(this.gasLevel > MIN_GAS_LEVEL){
+                    if (this.gasLevel > MIN_GAS_LEVEL) {
                         this.currentRoad.getCarsOnRoad().remove(this);
                         this.currentRoad = nextRoad;
                         this.currentRoad.getCarsOnRoad().add(this);
                         this.position = START_POSITION;
+                    } else {
+                        this.speed = MIN_SPEED_LEVEL;
                     }
                 }
             }
@@ -119,7 +120,7 @@ public class Car {
         if (this.currentRoad.getLength() > this.getPosition() && this.gasLevel > MIN_GAS_LEVEL) {
             this.position += this.speed;
             this.gasLevel -= this.speed;
-        } else if (this.currentRoad.getLength() < this.getPosition() || this.gasLevel <= MIN_GAS_LEVEL ) {
+        } else if (this.currentRoad.getLength() < this.getPosition() || this.gasLevel <= MIN_GAS_LEVEL) {
             this.speed = MIN_SPEED_LEVEL;
         } else {
             this.speed = MIN_SPEED_LEVEL;
